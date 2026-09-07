@@ -23,7 +23,12 @@ vector<Time> read_data(string const& file_path, int const& rader)
     {
         ostringstream numberformater{};
         string tmp{};
-        filestream >> times.at(i).name;
+        if(!(filestream >> times.at(i).name))
+        {
+            //slut på rader
+            cout << "bork" << endl;
+            return times;
+        }
         for (int i = 0; i < 3; ++i) 
         {
             filestream >> tmp;
