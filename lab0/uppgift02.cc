@@ -13,10 +13,23 @@ struct Time
     int sort_tid;
 };
 
-vector<Time> read_data(string const& file_path)
+vector<Time> read_data()
 {
-    ifstream filestream(file_path);
+    string filnamn{};
     vector<Time> times{};
+    
+    cout << "Skriv in ett filnamn: ";
+    cin >> filnamn;
+    ifstream filestream(filnamn);
+    while (!(filestream.is_open()))
+    {
+        cout << "FEL: Filen gick inte att oppna!" << endl;
+        cout << "Skriv in ett filnamn: ";
+        cin >> filnamn;
+        filestream.open(filnamn);
+        cin.ignore(1000, '\n');
+    }
+    
 
     Time iteration {};
     while (!filestream.eof()) 
@@ -26,7 +39,7 @@ vector<Time> read_data(string const& file_path)
         if(!(filestream >> iteration.name))
         {
             //slut på rader
-            cout << "bork: " << endl;
+            cout << "varning: sista raden i filen ar ej en lopar tid " << endl;
             return times;
         }
         for (int j = 0; j < 3; ++j)
@@ -54,14 +67,17 @@ void sort_data(vector<Time> & data)
 
 int get_rows(int rader_i_fil) {
     int rader{};
-    cout << "ange antal rader:";
+    string input{};
     
-    if (!(cin >> rader)) {
-        cout << "FEL: Inmatningen måste vara ett positivt heltal!" << endl;
+    cout << "ange antal rader:";
+    if(!(cin >> rader))
+    {
+        cout << "FEL: Inmatningen maste vara ett positivt heltal!" << endl;
         cin.ignore(1000, '\n');
         return get_rows(rader_i_fil);
     }
-    if ( (rader > rader_i_fil) || (rader <= 0)) {
+    if ( (rader > rader_i_fil) || (rader <= 0)) 
+    {
         cout << "FEL: Det finns inte " << rader << " rader i filen." << endl;
         cin.ignore(1000, '\n');
         return get_rows(rader_i_fil);
@@ -69,15 +85,13 @@ int get_rows(int rader_i_fil) {
     return rader;
 }
 
-int main() {
-    string filnamn{};
-    unsigned int rader{};
-    cout << "Skriv in ett filnamn: ";
-    cin >> filnamn;
+int main() 
+{
 
+    unsigned int rader{};
     // Kolla om det går att dra in i rader så om man skriver negativt
     vector<Time> data;
-    data = read_data(filnamn);
+    data = read_data();
     sort_data(data);
 
     rader = get_rows(data.size());
