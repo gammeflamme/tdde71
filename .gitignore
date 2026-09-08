@@ -1,4 +1,4 @@
 /.vs
 /tdde71.code-workspace
-lab0/a.exe
-lab0/a.out
+*.exe
+*.out

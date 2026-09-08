@@ -86,5 +86,5 @@ int main()
     getline(used_cin, indata);
     cout << "\nÖvriga namn: " << indata << endl;
 
-    return 1
+    return 1;
 }
