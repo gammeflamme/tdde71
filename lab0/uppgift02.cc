@@ -45,10 +45,10 @@ vector<Time> read_data()
         for (int j = 0; j < 3; ++j)
         {
             filestream >> tmp;
-            numberformater << setfill('0') << setw(2) << tmp;
+            numberformater << setfill('0') << setw(2 - (j == 0)) << tmp;
         }
         iteration.sort_tid = stoi(numberformater.str());
-        iteration.tid = numberformater.str().insert(2,1,':').insert(5,1,':');
+        iteration.tid = numberformater.str().insert(1,1,':').insert(4,1,':');
         filestream.ignore(10000, '\n');
         times.push_back(iteration);
     }
