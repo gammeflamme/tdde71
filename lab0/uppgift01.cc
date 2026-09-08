@@ -17,40 +17,44 @@ int main()
     cout << "  ===== Del A Formaterad I/O =====\n"
          << "  Skriv in ett heltal: ";
     cin >> heltal;
+    cin.ignore(1000, '\n');
     cout << "  Du skrev in talet: " << heltal
          <<"\n  Skriv in ett heltal och ett flyttal: ";
     cin >> heltal;
     cin >> flyttal;
+    cin.ignore(1000, '\n');
     cout << "  Du skrev in heltalet: " << heltal
          << "\n  Du skrev in flyttalet: " << flyttal
          << "\n  Skriv in ett flyttal och ett heltal: ";
     cin >> flyttal;
     cin >> heltal;
+    cin.ignore(1000, '\n');
     cout << "  Du skrev in heltalet: " << heltal
          << "\n  Du skrev in flyttalet: " << flyttal
          << "\n  Skriv in ett tecken: ";
     cin >> tecken;
+    cin.ignore(1000, '\n');
     cout << "  Du skrev in tecknet: " << tecken
          << "\n  Skriv in ett ord: ";
     cin >> ord;
-    cout << "  Du skrev in ordet: " << ord;
+    cout << "  Du skrev in ordet: " << ord << endl;
     
 
     cin.clear();
     cin.ignore(1000, '\n');
-
 
     // DEL B (samma variabler)
     cout << "\n  ===== Del B Escapesekvenser =====\n"
          << "  Skriv in ett heltal och ett ord: ";
     cin >> heltal;
     cin >> ord;
+    cin.ignore(1000, '\n');
     cout << "  Du skrev in talet |" << heltal << "| och ordet |" << ord << "|."
          << "\n  Skriv in ett tecken och ett ord: ";
     cin >> tecken;
     cin >> ord;
     cout << "  Du skrev in ordet \"" << ord 
-         << "\" och tecknet '" << tecken << "'.";
+         << "\" och tecknet '" << tecken << "'." << endl;
 
 
     cin.clear();
@@ -73,6 +77,7 @@ int main()
              << right << setw(10) << setfill('_') << fixed 
              << setprecision (3) << flyttal << '\n';
     }
+    cout << endl;
 
 
     cin.clear();
@@ -84,10 +89,7 @@ int main()
     getline(cin, mening);
     cout << "Du skrev in: \"" << mening << "\"\nSkrev in en till rad text: ";
     getline(cin, mening);
-    cout << "Du skrev in: \"" << mening << '"';
-
-    cin.clear();
-    cin.ignore(1000, '\n');
+    cout << "Du skrev in: \"" << mening << '"' << endl;
 
 
     // DEL E
