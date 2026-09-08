@@ -20,6 +20,7 @@ vector<Time> read_data()
     
     cout << "Skriv in ett filnamn: ";
     cin >> filnamn;
+    cin.ignore(1000, '\n');
     ifstream filestream(filnamn);
     while (!(filestream.is_open()))
     {
@@ -84,6 +85,7 @@ int get_rows(int rader_i_fil) {
         cin.ignore(1000, '\n');
         return get_rows(rader_i_fil);
     }
+    cin.ignore(1000, '\n');
     return rader;
 }
 
