@@ -34,6 +34,9 @@ int main()
          << "\n  Skriv in ett ord: ";
     cin >> ord;
     cout << "  Du skrev in ordet: " << ord;
+    
+
+    cin.clear();
     cin.ignore(1000, '\n');
 
 
@@ -48,6 +51,9 @@ int main()
     cin >> ord;
     cout << "  Du skrev in ordet \"" << ord 
          << "\" och tecknet '" << tecken << "'.";
+
+
+    cin.clear();
     cin.ignore(1000, '\n');
 
 
@@ -67,6 +73,9 @@ int main()
              << right << setw(10) << setfill('_') << fixed 
              << setprecision (3) << flyttal << '\n';
     }
+
+
+    cin.clear();
     cin.ignore(1000, '\n');
 
     // DEL D
@@ -76,6 +85,10 @@ int main()
     cout << "Du skrev in: \"" << mening << "\"\nSkrev in en till rad text: ";
     getline(cin, mening);
     cout << "Du skrev in: \"" << mening << '"';
+
+    cin.clear();
+    cin.ignore(1000, '\n');
+
 
     // DEL E
     string indata {};

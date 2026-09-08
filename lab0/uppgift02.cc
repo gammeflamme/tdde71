@@ -73,12 +73,14 @@ int get_rows(int rader_i_fil) {
     if(!(cin >> rader))
     {
         cout << "FEL: Inmatningen maste vara ett positivt heltal!" << endl;
+        cin.clear();
         cin.ignore(1000, '\n');
         return get_rows(rader_i_fil);
     }
     if ( (rader > rader_i_fil) || (rader <= 0)) 
     {
         cout << "FEL: Det finns inte " << rader << " rader i filen." << endl;
+        cin.clear();
         cin.ignore(1000, '\n');
         return get_rows(rader_i_fil);
     }
