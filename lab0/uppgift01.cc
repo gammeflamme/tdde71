@@ -8,7 +8,7 @@ int main()
 
     // DEL A
 
-    // Variabeldefinitioner för alla delar
+    // Variabeldefinitioner som kommer användas i flera delar
     int heltal{};
     float flyttal{};
     char tecken{};
@@ -39,7 +39,7 @@ int main()
     cin >> ord;
     cout << "  Du skrev in ordet: " << ord << endl;
     
-
+     // Reset cin
     cin.clear();
     cin.ignore(1000, '\n');
 
@@ -64,11 +64,14 @@ int main()
     // DEL C
     cout << "\n\n===== Del C Inmatningsbuffer och tabellutskrift =====\n"
          <<"Skriv in en sträng och ett decimaltal fem gånger på samma rad: \n";
+     // För ge input innan tabellutskrift
     cin >> ord >> flyttal;
     cout << "Här är talen i tabellform: \n" 
          << "==============================\n";
+     // Gå igenom de 5 talen
     for (int i = 0 ; i < 5; ++i)
     {
+          // Finns ett initialt värde, skippar första
         if (i != 0)
         {
             cin >> ord >> flyttal;
@@ -99,6 +102,7 @@ int main()
     getline(cin, indata);
     istringstream used_cin {indata};
     cout << "Du skrev in: \"" << indata << '"';
+    // 2 gånger för att kasta liu-id
     used_cin >> indata;
     used_cin >> indata;
     cout << "\nFörnamn: " << indata;
