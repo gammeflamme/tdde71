@@ -146,7 +146,7 @@ TEST_CASE("std operators")
    {
       Time t0{0,0,0};
       Time t1{1,0,0};
-      Time t2{1,0,1};
+      Time t2{1,0,0,1};
       CHECK_FALSE(t1 < t0);
       CHECK(t1 < t2);
       CHECK(t0 < t2);
@@ -156,7 +156,7 @@ TEST_CASE("std operators")
    {
       Time t0{0,0,0};
       Time t1{1,0,0};
-      Time t2{1,0,1};
+      Time t2{1,0,0,1};
       CHECK_FALSE(t0 > t1);
       CHECK(t2 > t1);
       CHECK(t2 > t0);
@@ -166,7 +166,7 @@ TEST_CASE("std operators")
    {
       Time t0{0,0,0};
       Time t1{1,0,0};
-      Time t2{1,0,1};
+      Time t2{1,0,0,1};
       CHECK_FALSE(t1 <= t0);
       CHECK(t1 <= t2);
       CHECK(t0 <= t2);
@@ -176,7 +176,7 @@ TEST_CASE("std operators")
    {
       Time t0{0,0,0};
       Time t1{1,0,0};
-      Time t2{1,0,1};
+      Time t2{1,0,0,1};
       CHECK_FALSE(t0 >= t1);
       CHECK(t2 >= t1);
       CHECK(t2 >= t0);
@@ -200,13 +200,13 @@ TEST_CASE("Prefix postfix")
    {
       Time t0{0,0,0};
       Time t1{22,59,59};
-      Time t2{23,59,59};
+      Time t2{23,59,59,999};
       CHECK((t0++).to_string() == "00:00:00");
       CHECK((t0).to_string() == "00:00:01");
       CHECK((t1++).to_string() == "22:59:59");
       CHECK((t1).to_string() == "23:00:00");
-      CHECK((t2++).to_string() == "23:59:59");
-      CHECK((t2).to_string() == "00:00:00");
+      CHECK((t2++).to_string() == "23:59:59:999");
+      CHECK((t2).to_string() == "00:00:00:999");
    }
 }
 TEST_CASE("Ostream")
