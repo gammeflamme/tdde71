@@ -114,7 +114,22 @@ bool Time::operator>(Time const& rhs) const
 {
     return !(*this <= rhs);
 }
+Time& Time::operator++() {
+    int overflow{};
+    seconds ++;
+    overflow = seconds / 60;
+    seconds = seconds % 60;
 
+    minutes += overflow;
+    overflow = minutes / 60;
+    hours = (hours + overflow) % 24;
+    return *this;
+}
+Time Time::operator++(int) {
+    Time old {*this};
+    operator++();
+    return old;
+}
 bool Time::operator>=(Time const& rhs) const
 {
     return !(*this < rhs);

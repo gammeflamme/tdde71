@@ -167,18 +167,18 @@ TEST_CASE("Prefix postfix, strömmar")
    SECTION("Prefix")
    {
       Time t0{0,0,0};
-      Time t1{22,59,59}
-      CHECK((++t0).get_second() == 1)
-      CHECK((++t1).get_hour() == 23)
+      Time t1{22,59,59};
+      CHECK((++t0).get_second() == 1);
+      CHECK((++t1).get_hour() == 23);
    }
       SECTION("Postfix")
    {
       Time t0{0,0,0};
-      Time t1{22,59,59}
-      CHECK((++t0).get_second() == 0)
-      CHECK(t0.get_second() == 1)
-      CHECK((++t1).get_hour() == 23)
-      CHECK(t1.get_hour() == 23)
+      Time t1{22,59,59};
+      CHECK((t0++).get_second() == 0);
+      CHECK(t0.get_second() == 1);
+      CHECK_FALSE((t1++).get_hour() == 23);
+      CHECK(t1.get_hour() == 23);
    }
 }
 // Fill with more tests of other functions and operators!

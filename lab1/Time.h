@@ -21,7 +21,8 @@ class Time
     bool operator>=(Time const& lhs) const;
     bool operator!=(Time const& rhs) const;
     bool operator==( Time const& rhs) const;
-    
+    Time& operator++();
+    Time operator++(int);
     
 
     private:
