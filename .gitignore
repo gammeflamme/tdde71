@@ -2,3 +2,4 @@
 /tdde71.code-workspace
 *.exe
 *.out
+*.o
