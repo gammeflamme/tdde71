@@ -55,18 +55,18 @@ TEST_CASE ("Constructors and getters")
       CHECK( t2.get_second() == 59 );  
    }
 }
-/* ----- REMOVE THIS COMMENT WHEN PREVIOUS TEST PASSES -----
 TEST_CASE ("is_am") 
 {
    Time t0{"05:00:00"};
    Time t1{"14:00:00"};
    CHECK       ( t0.is_am() );
    CHECK_FALSE ( t1.is_am() );
-   // Fill with extra corner cases!
+   
+   Time t2{"12:00:00"};
+   Time t3{"00:00:10"};
+   CHECK       ( t2.is_am() );
+   CHECK_FALSE ( t3.is_am() );
 }
-*/
-/* ----- REMOVE THIS COMMENT WHEN PREVIOUS TEST PASSES -----
-
 TEST_CASE ("to_string")
 {
    Time t0{};
@@ -77,20 +77,108 @@ TEST_CASE ("to_string")
    SECTION("24 hour format no argument")
    {
       CHECK( t0.to_string() == "00:00:00" );
-      // Fill with more tests!
+      CHECK( t1.to_string() == "11:59:59" );
+      CHECK( t2.to_string() == "12:00:00" );
+      CHECK( t3.to_string() == "13:00:00" );
+      CHECK( t4.to_string() == "23:59:59" );
    }
    
    SECTION("24 hour format with argument")
    {
-      // Fill with more tests!
+      CHECK( t0.to_string(false) == "00:00:00" );
+      CHECK( t1.to_string(false) == "11:59:59" );
+      CHECK( t2.to_string(false) == "12:00:00" );
+      CHECK( t3.to_string(false) == "13:00:00" );
+      CHECK( t4.to_string(false) == "23:59:59" );
    } 
 
    SECTION("12 hour format")
    {
-      // Fill with more tests!
+      CHECK( t0.to_string(true) == "12:00:00pm" );
+      CHECK( t1.to_string(true) == "11:59:59am" );
+      CHECK( t2.to_string(true) == "12:00:00am" );
+      CHECK( t3.to_string(true) == "01:00:00pm" );
+      CHECK( t4.to_string(true) == "11:59:59pm" );
    }
 }
 
-// Fill with more tests of other functions and operators!
+TEST_CASE("std operators")
+{
+   SECTION("Equals")
+   {
+      Time t0{};
+      Time t1{0,0,0};
+      Time t2{1,0,1};
+      CHECK(t1==t0);
+      CHECK_FALSE(t0 == t2);
+   }
+   SECTION("Not Equals")
+   {
+      Time t0{};
+      Time t1{0,0,0};
+      Time t2{1,0,0};
+      CHECK_FALSE(t0 != t1);
+      CHECK(t0 != t2);
+   }
+   SECTION("Less than")
+   {
+      Time t0{0,0,0};
+      Time t1{1,0,0};
+      Time t2{1,0,1};
+      CHECK_FALSE(t1 < t0);
+      CHECK(t1 < t2);
+      CHECK(t0 < t2);
+      CHECK_FALSE(t1 < t1);
+   }
+      SECTION("Greater than")
+   {
+      Time t0{0,0,0};
+      Time t1{1,0,0};
+      Time t2{1,0,1};
+      CHECK_FALSE(t0 > t1);
+      CHECK(t2 > t1);
+      CHECK(t2 > t0);
+      CHECK_FALSE(t1 > t1);
+   }
+      SECTION("Less than equal")
+   {
+      Time t0{0,0,0};
+      Time t1{1,0,0};
+      Time t2{1,0,1};
+      CHECK_FALSE(t1 <= t0);
+      CHECK(t1 <= t2);
+      CHECK(t0 <= t2);
+      CHECK(t1 <= t1);
+   }
+      SECTION("Greater than equal")
+   {
+      Time t0{0,0,0};
+      Time t1{1,0,0};
+      Time t2{1,0,1};
+      CHECK_FALSE(t0 >= t1);
+      CHECK(t2 >= t1);
+      CHECK(t2 >= t0);
+      CHECK(t1 >= t1);
+   }
+}
 
-*/
+TEST_CASE("Prefix postfix, strömmar") 
+{
+   SECTION("Prefix")
+   {
+      Time t0{0,0,0};
+      Time t1{22,59,59}
+      CHECK((++t0).get_second() == 1)
+      CHECK((++t1).get_hour() == 23)
+   }
+      SECTION("Postfix")
+   {
+      Time t0{0,0,0};
+      Time t1{22,59,59}
+      CHECK((++t0).get_second() == 0)
+      CHECK(t0.get_second() == 1)
+      CHECK((++t1).get_hour() == 23)
+      CHECK(t1.get_hour() == 23)
+   }
+}
+// Fill with more tests of other functions and operators!
