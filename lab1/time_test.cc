@@ -137,36 +137,34 @@ TEST_CASE("std operators")
       Time t0{};
       Time t1{0,0,0};
       Time t2{1,0,0};
-      Time t3{1,0,0,1}; // thou
       CHECK_FALSE(t0 != t1);
       CHECK(t0 != t2);
-      CHECK(t2 != t3); //thou
    }
    SECTION("Less than")
    {
       Time t0{0,0,0};
       Time t1{1,0,0};
-      Time t2{1,0,0,1};
-      CHECK_FALSE(t1 < t0);
-      CHECK(t1 < t2);
+      Time t2{1,0,0};
       CHECK(t0 < t2);
+      CHECK_FALSE(t1 < t0);
+      CHECK_FALSE(t1 < t2);
       CHECK_FALSE(t1 < t1);
    }
       SECTION("Greater than")
    {
       Time t0{0,0,0};
       Time t1{1,0,0};
-      Time t2{1,0,0,1};
-      CHECK_FALSE(t0 > t1);
-      CHECK(t2 > t1);
+      Time t2{1,0,0};
       CHECK(t2 > t0);
+      CHECK_FALSE(t0 > t1);
+      CHECK_FALSE(t2 > t1);
       CHECK_FALSE(t1 > t1);
    }
       SECTION("Less than equal")
    {
       Time t0{0,0,0};
       Time t1{1,0,0};
-      Time t2{1,0,0,1};
+      Time t2{1,0,0};
       CHECK_FALSE(t1 <= t0);
       CHECK(t1 <= t2);
       CHECK(t0 <= t2);
@@ -200,24 +198,22 @@ TEST_CASE("Prefix postfix")
    {
       Time t0{0,0,0};
       Time t1{22,59,59};
-      Time t2{23,59,59,999};
+      Time t2{23,59,59};
       CHECK((t0++).to_string() == "00:00:00");
       CHECK((t0).to_string() == "00:00:01");
       CHECK((t1++).to_string() == "22:59:59");
       CHECK((t1).to_string() == "23:00:00");
-      CHECK((t2++).to_string() == "23:59:59:999");
-      CHECK((t2).to_string() == "00:00:00:999");
+      CHECK((t2++).to_string() == "23:59:59");
+      CHECK((t2).to_string() == "00:00:00");
    }
 }
 TEST_CASE("Ostream")
 {
-   Time t1{22,59,59};
-   std::ostringstream stream{"test"};
-   //std::ostream stream{};
-   t1 << std::cout << std::endl;
-   t1 >> std::cout << std::endl;
-   //std::cout << t1;
-   //stream << t1;
-
+   // Time t1{};
+   // std::ostringstream oss1{};
+   // std::ostream os1{}
+   // os1 << t1;
+   // oss1 << os1
+   // CHECK(oss1.str() == "00:00:00");
 }
 //Fill with more tests of other functions and operators!

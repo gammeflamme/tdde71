@@ -8,6 +8,9 @@
 
 - lägga till const där det går
 - kommentarer vid behov
+- Alla varibler måste skapas med ett värde
+- Error hantering
+- Stringinmatning av tusendelar fungerar ej!
 */ 
 
 Time::Time(unsigned int H, unsigned int M, unsigned int S, unsigned int T)
@@ -16,10 +19,6 @@ Time::Time(unsigned int H, unsigned int M, unsigned int S, unsigned int T)
     set_time(H,M,S,T);
 }
 
-// Time::Time()
-//     : hours {0}, minutes {0}, seconds {0}, thousands{0}
-// {}
-
 Time::Time(std::string time_string)
     : hours {0}, minutes {0}, seconds {0}, thousands{0}
 {
@@ -27,6 +26,7 @@ Time::Time(std::string time_string)
     std::istringstream intermidiate_stream {time_string};
     char seperator{};
     intermidiate_stream >> H >> seperator >> M >> seperator >> S >> seperator >> T;
+    if (!intermidiate_stream) 
     set_time(H, M, S, T);
 } 
 
@@ -40,28 +40,6 @@ void Time::set_time(unsigned int H, unsigned int M, unsigned int S, unsigned int
     minutes = M;
     seconds = S;
     thousands = T;
-}
-void Time::rollover() //does not handle more than 999 thou, 59 sec/min and 23 hour of rollover
-{
-    if(thousands >= 1000)
-    {
-        thousands -= 1000;
-        seconds++;
-    }
-    if(seconds >= 60)
-    {
-        seconds -= 60;
-        minutes++;
-    }
-    if(minutes >= 60)
-    {
-        minutes -= 60;
-        hours++;
-    }
-    if(hours >= 24)
-    {
-        hours -= 24;
-    }
 }
 std::string Time::to_string(bool is_12h) const
 {
@@ -139,9 +117,8 @@ bool Time::operator<(Time const& rhs) const
         if(rhs.get_minute() == minutes)
         {
             if (rhs.get_second() > seconds) {return true;}
-            if (rhs.get_second() > seconds && rhs.get_second() > thousands) {return true;}
+            if (rhs.get_second() > seconds && rhs.get_thou() > thousands) {return true;}
         }
-            
     }
     return false;
 }
@@ -161,23 +138,26 @@ bool Time::operator>=(Time const& rhs) const
 
 Time& Time::operator++()
 {
+    int overflow {0};
     seconds++;
-    rollover();
+    overflow = seconds / 60; //Int division blir 1 om 60 sec eller över
+    seconds = seconds % 60;
+    minutes += overflow;
+    overflow = minutes / 60;
+    minutes = minutes % 60;
+    hours += overflow;
+    hours = hours % 24;
+
     return *this;
 }
 Time Time::operator++(int)
 {
     Time old{*this};
-    seconds++;
-    rollover();
+    operator++();
     return old;
 }
-std::ostream& Time::operator<<(std::ostream& os)
+std::ostream& operator<<(std::ostream& lhs, const Time& rhs)
 {
-    return os << to_string();
-}
-
-std::ostream& Time::operator>>(std::ostream& os)
-{
-    return os << to_string();
+    lhs << rhs.to_string();
+    return lhs;
 }
