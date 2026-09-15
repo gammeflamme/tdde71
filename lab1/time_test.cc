@@ -207,6 +207,7 @@ TEST_CASE("subtract")
    Time t2{0,0,23};
    CHECK(t1-t1 == 0);
    CHECK(t1-t2 == 23*3600);
+   CHECK(t2-t1 == -23*3600);
 
 }
 

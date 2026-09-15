@@ -162,8 +162,8 @@ std::ostream& operator<<(std::ostream& lhs, const Time& rhs)
 float Time::operator-(Time const& rhs)
 {
 
-    return (hours-rhs.get_hour())*3600 +
-           (minutes-rhs.get_minute())*60 + 
-           (seconds-rhs.get_second()) +
-           (thousands-rhs.get_thou())/1000;
+    return (int(hours)-int(rhs.get_hour()))*3600 +
+           (int(minutes)-int(rhs.get_minute()))*60 + 
+           (int(seconds)-int(rhs.get_second())) +
+           (int(thousands)-int(rhs.get_thou()))/1000;
 }
