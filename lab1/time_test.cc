@@ -20,28 +20,20 @@ TEST_CASE ("Constructors and getters")
       Time t0{0,0,0};
       Time t1{12,30,30};
       Time t2{23,59,59};
-      Time t3{23,59,59,999};
 
       CHECK_THROWS( Time{13,35,60} );
       CHECK_THROWS( Time{13,60,35} );
       CHECK_THROWS( Time{24,35,35} );
-      CHECK_THROWS( Time{21,35,35,1000} );//thou
              
       CHECK( t0.get_hour()   == 0 );
       CHECK( t0.get_minute() == 0 );
       CHECK( t0.get_second() == 0 );
-      CHECK( t0.get_thou() == 0 );//thou
       CHECK( t1.get_hour()   == 12 );
       CHECK( t1.get_minute() == 30 );
       CHECK( t1.get_second() == 30 );
-      CHECK( t1.get_thou() == 0 );//thou
       CHECK( t2.get_hour()   == 23 );
       CHECK( t2.get_minute() == 59 );
       CHECK( t2.get_second() == 59 );
-      CHECK( t3.get_hour()   == 23 );//thou
-      CHECK( t3.get_minute() == 59 );//thou
-      CHECK( t3.get_second() == 59 );//thou
-      CHECK( t3.get_thou() == 999 );//thou
    }
 
    SECTION("String")
@@ -49,12 +41,10 @@ TEST_CASE ("Constructors and getters")
       Time t0{"00:00:00"};
       Time t1{"12:30:30"};
       Time t2{"23:59:59"};
-      Time t3{"23:59:59:999"};//thou
 
       CHECK_THROWS( Time{"13:35:60"} );
       CHECK_THROWS( Time{"13:60:35"} );
       CHECK_THROWS( Time{"24:35:35"} );
-      CHECK_THROWS( Time{"22:35:35:1000"} );
 
       CHECK( t0.get_hour()   == 0 );
       CHECK( t0.get_minute() == 0 );
@@ -65,10 +55,6 @@ TEST_CASE ("Constructors and getters")
       CHECK( t2.get_hour()   == 23 );
       CHECK( t2.get_minute() == 59 );
       CHECK( t2.get_second() == 59 );  
-      CHECK( t3.get_hour()   == 23 );//thou
-      CHECK( t3.get_minute() == 59 );//thou
-      CHECK( t3.get_second() == 59 );//thou
-      CHECK( t3.get_thou() == 999 );//thou
    }
 }
 TEST_CASE ("is_am") 
@@ -174,7 +160,7 @@ TEST_CASE("std operators")
    {
       Time t0{0,0,0};
       Time t1{1,0,0};
-      Time t2{1,0,0,1};
+      Time t2{1,0,0};
       CHECK_FALSE(t0 >= t1);
       CHECK(t2 >= t1);
       CHECK(t2 >= t0);
@@ -209,11 +195,56 @@ TEST_CASE("Prefix postfix")
 }
 TEST_CASE("Ostream")
 {
-   // Time t1{};
-   // std::ostringstream oss1{};
-   // std::ostream os1{}
-   // os1 << t1;
-   // oss1 << os1
-   // CHECK(oss1.str() == "00:00:00");
+   Time t1{0,0,23};
+   std::ostringstream oss1{};
+   oss1 << t1;
+   CHECK(oss1.str() == "00:00:23");
 }
-//Fill with more tests of other functions and operators!
+
+TEST_CASE("subtract")
+{
+   Time t1{23,0,23};
+   Time t2{0,0,23};
+   CHECK(t1-t1 == 0);
+   CHECK(t1-t2 == 23*3600);
+
+}
+
+TEST_CASE("Thousands")
+{
+   Time t0{0,0,0,1};
+   Time t1{23, 59, 59, 999};
+
+   SECTION("Integer")
+   {
+      CHECK_THROWS( Time{21,35,35,1000} );
+      CHECK( t1.get_thou() == 999 );
+   }
+
+   SECTION("String")
+   {
+      CHECK_THROWS( Time{"22:35:35:1000"} );
+      CHECK( t1.get_hour()   == 23 );
+      CHECK( t1.get_minute() == 59 );
+      CHECK( t1.get_second() == 59 );
+      CHECK( t1.get_thou() == 999 );
+   }
+
+   SECTION("24 hour format no argument")
+   {
+      CHECK( t0.to_string() == "00:00:00:001" );
+      CHECK( t1.to_string() == "23:59:59:999" );
+   }
+   
+   SECTION("24 hour format with argument")
+   {
+      CHECK( t0.to_string(false) == "00:00:00:001" );
+      CHECK( t1.to_string(false) == "23:59:59:999" );
+   } 
+
+   SECTION("12 hour format")
+   {
+      CHECK( t0.to_string(true) == "12:00:00:001pm" );
+      CHECK( t1.to_string(true) == "11:59:59:999pm" );
+   }
+}

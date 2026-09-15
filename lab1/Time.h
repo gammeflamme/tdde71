@@ -14,15 +14,15 @@ class Time
     unsigned int get_thou() const;
     std::string to_string(bool is_12h = false) const;
     bool is_am() const;
-    // Time operator++(int unused);
     bool operator<(Time const& rhs) const;
     bool operator>(Time const& rhs) const;
     bool operator<=(Time const& rhs) const;
     bool operator>=(Time const& rhs) const;
     bool operator!=(Time const& rhs) const;
-    bool operator==( Time const& rhs) const;
+    bool operator==(Time const& rhs) const;
     Time& operator++();
     Time operator++(int);
+    float operator-(Time const& rhs);
 
     private:
     void set_time(unsigned int H, unsigned int M, unsigned int S, unsigned int T);

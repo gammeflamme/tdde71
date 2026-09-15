@@ -8,9 +8,7 @@
 
 - lägga till const där det går
 - kommentarer vid behov
-- Alla varibler måste skapas med ett värde
 - Error hantering
-- Stringinmatning av tusendelar fungerar ej!
 */ 
 
 Time::Time(unsigned int H, unsigned int M, unsigned int S, unsigned int T)
@@ -26,7 +24,6 @@ Time::Time(std::string time_string)
     std::istringstream intermidiate_stream {time_string};
     char seperator{};
     intermidiate_stream >> H >> seperator >> M >> seperator >> S >> seperator >> T;
-    if (!intermidiate_stream) 
     set_time(H, M, S, T);
 } 
 
@@ -58,7 +55,7 @@ std::string Time::to_string(bool is_12h) const
                         << std::setw(2) << seconds;
     if (thousands != 0)
     {
-        intermidiate_stream << ':'<<std::setw(2)<< thousands;
+        intermidiate_stream << ':'<<std::setw(3)<< thousands;
     }
     if (is_12h)
     {
@@ -138,7 +135,7 @@ bool Time::operator>=(Time const& rhs) const
 
 Time& Time::operator++()
 {
-    int overflow {0};
+    int overflow {};
     seconds++;
     overflow = seconds / 60; //Int division blir 1 om 60 sec eller över
     seconds = seconds % 60;
@@ -160,4 +157,13 @@ std::ostream& operator<<(std::ostream& lhs, const Time& rhs)
 {
     lhs << rhs.to_string();
     return lhs;
+}
+
+float Time::operator-(Time const& rhs)
+{
+
+    return (hours-rhs.get_hour())*3600 +
+           (minutes-rhs.get_minute())*60 + 
+           (seconds-rhs.get_second()) +
+           (thousands-rhs.get_thou())/1000;
 }
